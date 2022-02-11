@@ -66,11 +66,17 @@ const Topbar = () => {
           hidden && "-translate-y-[200%]"
         }  w-1/3 absolute right-0 rounded-b-md h-48 text-2xl bg-slate-800 text-white flex flex-col items-center justify-center transition-transform duration-500 xl:hidden xxl:hidden`}
       >
-        <Link to="/home">Home</Link>
-        <Link to="/contact">Contact</Link>
+        <Link to="/home" onClick={() => setHidden(!hidden)}>
+          Home
+        </Link>
+        <Link to="/contact" onClick={() => setHidden(!hidden)}>
+          Contact
+        </Link>
         {key?.length > 0 ? (
           <>
-            <Link to="/profile">Profile</Link>
+            <Link to="/profile" onClick={() => setHidden(!hidden)}>
+              Profile
+            </Link>
             <span onClick={logout}>Logout</span>
           </>
         ) : (
