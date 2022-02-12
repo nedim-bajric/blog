@@ -4,9 +4,7 @@ import Topbar from "../../components/Topbar/Topbar";
 import { getAppKey } from "../../helpers/getKey";
 const Home = () => {
   const navigate = useNavigate();
-
   const [key, setKey] = useState("");
-
   useEffect(() => {
     setKey(getAppKey());
   }, []);

@@ -25,6 +25,8 @@ const Login = () => {
       const user = await signInWithEmailAndPassword(auth, email, pw);
       setKey(user.user.accessToken);
       navigate("/home");
+
+      console.log(user);
     } catch (error) {
       console.log(error.message);
     }
