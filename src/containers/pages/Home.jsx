@@ -31,7 +31,7 @@ const Home = () => {
   return (
     <div>
       {key?.length > 0 ? (
-        <div className="bg-gray-800 min-h-screen pb-10 ">
+        <div className="max-w-screen bg-gray-800 min-h-screen pb-10 ">
           <Topbar />
 
           {key?.includes("guest") ? null : (

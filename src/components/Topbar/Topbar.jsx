@@ -15,7 +15,7 @@ const Topbar = () => {
   };
 
   return (
-    <div className="w-screen h-16 bg-gray-800 relative">
+    <div className="w-full h-16 bg-gray-800 relative">
       <div className="wrapper w-full h-full flex items-center justify-between text-white px-2">
         <div className="logo_container font-bold text-slate-300 font-mono animate-pulse cursor-pointer">
           <Link to="/home">blog.</Link>

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { addDoc, collection } from "firebase/firestore";
 import { auth, db } from "../../firebase/index";
 import { useNavigate } from "react-router-dom";
-const Createpost = () => {
+import { AiOutlineClose } from "react-icons/ai";
+const Createpost = ({ setAddPost, addPost }) => {
   const [title, setTitle] = useState("");
   const [postText, setPostText] = useState("");
 
@@ -19,8 +20,13 @@ const Createpost = () => {
   };
 
   return (
-    <div className="absolute w-11/12 h-96 bg-white rounded-xl left-0 right-0 mx-auto">
+    <div className="absolute w-11/12 h-96 bg-white rounded-xl left-0 right-0 mx-auto lg:w-8/12 xl:w-5/12 xxl:w-1/3">
       <div className="w-full h-full flex flex-col items-center justify-center ">
+        <AiOutlineClose
+          className="self-end mr-3"
+          size={20}
+          onClick={() => setAddPost(!addPost)}
+        />
         <input
           onChange={(event) => {
             setTitle(event.target.value);
@@ -29,6 +35,7 @@ const Createpost = () => {
           placeholder="Enter Title"
           className="border-2 bg-gray-200 focus:outline-none focus:border-blue-400"
         />
+
         <textarea
           onChange={(event) => {
             setPostText(event.target.value);

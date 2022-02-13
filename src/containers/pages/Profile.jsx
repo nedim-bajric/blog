@@ -48,7 +48,10 @@ const Profile = () => {
       {key?.length > 0 && key !== "guest" ? (
         <div className="w-screen ">
           <Topbar />
-          <div className="wrapper  w-full min-h-screen bg-gray-800  flex flex-col items-center justify-start pt-10 z-1">
+          <div
+            onClick={() => setAddPost(!addPost)}
+            className="wrapper  w-full min-h-screen bg-gray-800  flex flex-col items-center justify-start pt-10 z-1"
+          >
             <div className="image_cont w-60 h-60 bg-red-500 rounded-full overflow-hidden border-2 border-slate-100">
               <img src={photoURL} className="w-full" alt="profile picture" />
             </div>
@@ -96,7 +99,7 @@ const Profile = () => {
                 />
               </div>
             </div>
-            <div className="cont_cont">
+            <div className="cont_cont flex flex-col items-center justify-center pt-2 pb-10">
               <div>
                 <h1 className="text-white/70 text-xl">Previouse posts</h1>
               </div>
@@ -106,7 +109,9 @@ const Profile = () => {
                 )}
               </div>
             </div>
-            {addPost && <Createpost />}
+            {addPost && (
+              <Createpost addPost={addPost} setAddPost={setAddPost} />
+            )}
           </div>
         </div>
       ) : (
