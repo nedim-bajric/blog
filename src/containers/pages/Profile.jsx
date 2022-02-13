@@ -1,21 +1,26 @@
 import React, { useState, useEffect } from "react";
 import Topbar from "../../components/Topbar/Topbar";
-import { useAuth, upload } from "../../firebase/index";
+import { useAuth, upload, auth, db } from "../../firebase/index";
+import { getDocs, collection, deleteDoc, doc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { getAppKey } from "../../helpers/getKey";
+import { MdNoteAdd } from "react-icons/md";
+import Createpost from "../../components/CreatePost/Createpost";
+import Post from "../../components/Post/Post";
 const Profile = () => {
   const currentUser = useAuth();
+  const userId = currentUser?.auth.currentUser.uid;
   const [hidden, setHidden] = useState(true);
+  const [addPost, setAddPost] = useState(false);
   const [photo, setPhoto] = useState(null);
   const [loading, setLoading] = useState(false);
   const [photoURL, setPhotoURL] = useState(
     "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
   );
+  const [postLists, setPostList] = useState([]);
+  const postsCollectionRef = collection(db, "posts");
   const navigate = useNavigate();
   const [key, setKey] = useState("");
-  useEffect(() => {
-    setKey(getAppKey());
-  }, []);
   function handleChange(e) {
     if (e.target.files[0]) {
       setPhoto(e.target.files[0]);
@@ -27,17 +32,23 @@ const Profile = () => {
   }
 
   useEffect(() => {
+    setKey(getAppKey());
     if (currentUser?.photoURL) {
       setPhotoURL(currentUser.photoURL);
     }
+    const getPosts = async () => {
+      const data = await getDocs(postsCollectionRef);
+      setPostList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+
+    getPosts();
   }, [currentUser]);
   return (
     <>
       {key?.length > 0 && key !== "guest" ? (
-        <div className="w-screen h-screen">
+        <div className="w-screen ">
           <Topbar />
-          {console.log(key)}
-          <div className="wrapper w-full h bg-gray-800  flex flex-col items-center justify-start pt-10">
+          <div className="wrapper  w-full min-h-screen bg-gray-800  flex flex-col items-center justify-start pt-10 z-1">
             <div className="image_cont w-60 h-60 bg-red-500 rounded-full overflow-hidden border-2 border-slate-100">
               <img src={photoURL} className="w-full" alt="profile picture" />
             </div>
@@ -75,6 +86,27 @@ const Profile = () => {
                 {currentUser?.email}
               </span>
             </div>
+            <div className="create_cont w-full mt-5 text-3xl text-white/30">
+              <div className="flex items-center justify-around w-11/12 mx-auto py-2">
+                <h3>Create New Post</h3>
+                <MdNoteAdd
+                  color="white"
+                  className="cursor-pointer"
+                  onClick={() => setAddPost(!addPost)}
+                />
+              </div>
+            </div>
+            <div className="cont_cont">
+              <div>
+                <h1 className="text-white/70 text-xl">Previouse posts</h1>
+              </div>
+              <div className="posts">
+                {postLists?.map(
+                  (post) => post.author?.id === userId && <Post post={post} />
+                )}
+              </div>
+            </div>
+            {addPost && <Createpost />}
           </div>
         </div>
       ) : (

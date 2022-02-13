@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
@@ -8,6 +7,7 @@ import {
   onAuthStateChanged,
   updateProfile,
 } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
 const firebaseConfig = {
@@ -22,7 +22,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const provider = new GoogleAuthProvider();
 const storage = getStorage();
-
+export const db = getFirestore(app);
 export const auth = getAuth(app);
 export const signInWithGoogle = () => signInWithPopup(auth, provider);
 

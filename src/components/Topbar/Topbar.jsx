@@ -73,15 +73,30 @@ const Topbar = () => {
           Contact
         </Link>
         {key?.length > 0 ? (
-          <>
-            <Link to="/profile" onClick={() => setHidden(!hidden)}>
-              Profile
-            </Link>
-            <span onClick={logout}>Logout</span>
-          </>
+          key === "guest" ? (
+            <>
+              <Link to="/" className="mr-2" onClick={logout}>
+                Login
+              </Link>
+              <Link to="/register" onClick={logout}>
+                Register
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link to="/profile" className="mr-2">
+                Profile
+              </Link>
+              <span onClick={logout} className="cursor-pointer">
+                Logout
+              </span>
+            </>
+          )
         ) : (
           <>
-            <Link to="/login">Login</Link>
+            <Link className="mr-2" to="/login">
+              Login
+            </Link>
             <Link to="/register">Register</Link>
           </>
         )}
